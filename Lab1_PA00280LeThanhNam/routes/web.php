@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TinController;
+use App\Http\Controllers\ThongTinController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -15,4 +16,4 @@ use App\Http\Controllers\TinController;
 Route::get('/', [TinController::class, 'trangChu']);
 Route::get('/lien-he', [TinController::class, 'lienHe']);
 Route::get('/ct/{id}', [TinController::class, 'chiTiet']);
-
+Route::get('/thongtinsv', [ThongTinController::class, 'thongTin']);
