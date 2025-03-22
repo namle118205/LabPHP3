@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('tieudetrang', 'Chi tiết tin')
+@section('tieudetrang', $tin->TieuDe)
 
 @section('noidung')
     <h1>{{ $tin->TieuDe }}</h1>
