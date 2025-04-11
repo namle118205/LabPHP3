@@ -4,23 +4,64 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class GuiEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct()
+    public $titleText;
+    public $contentText;
+    public $file;
+
+    /**
+     * Create a new message instance.
+     */
+    public function __construct($title, $content, $file = null)
     {
-        //
+        $this->titleText = $title;
+        $this->contentText = $content;
+        $this->file = $file;
     }
 
-    public function build()
+    /**
+     * Get the message envelope.
+     */
+    public function envelope(): Envelope
     {
-        return $this
-            ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
-            ->to('nle11082005@gmail.com') // Thay bằng email người nhận
-            ->subject('Tiêu Đề Thư Từ Laravel')
-            ->view('guimail');
+        return new Envelope(
+            subject: $this->titleText,
+        );
+    }
+
+    /**
+     * Get the message content definition.
+     */
+    public function content(): Content
+    {
+        return new Content(
+            view: 'mail.sendMail', 
+            with: [
+                'titleText' => $this->titleText,
+                'contentText' => $this->contentText,
+            ],
+        );
+    }
+
+    /**
+     * Get the attachments for the message.
+     */
+    public function attachments(): array
+    {
+        if ($this->file) {
+            return [
+                \Illuminate\Mail\Mailables\Attachment::fromPath($this->file->getRealPath())
+                    ->as($this->file->getClientOriginalName())
+                    ->withMime($this->file->getMimeType()),
+            ];
+        }
+        return [];
     }
 }
