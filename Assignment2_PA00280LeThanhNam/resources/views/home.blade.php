@@ -11,7 +11,7 @@
             @php $firstPost = $latest->shift(); @endphp
             <div class="mb-6">
                 <a href="{{ route('post.detail', $firstPost->id) }}">
-                    <img src="{{ asset('image/' . $firstPost->image) }}" alt="{{ $firstPost->title }}" class="w-full h-85 object-cover mb-3 rounded">
+                    <img src="{{ asset('image/' . $firstPost->image) }}" alt="{{ $firstPost->title }}" class="w-full h-65 object-cover mb-3 rounded">
                 </a>
                 <a href="{{ route('post.detail', $firstPost->id) }}" class="block text-black no-underline hover:text-blue-600">
                     <h3 class="font-semibold text-md mb-2">{{ $firstPost->title }}</h3>
